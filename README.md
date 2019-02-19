@@ -4,6 +4,8 @@ Inspired by [Code Bullets](https://twitter.com/code_bullet) fun autoclicker [vid
 
 <img src="./pics/day24.gif" alt="Day 12" width="300"/>
 
+YouTube video https://youtu.be/z8LuX1Uzw2A
+
 ## Instructions
 
 Open a browser and go to [the game](http://www.crazygames.com/game/storm-the-house). Get to the start screen.
