@@ -56,7 +56,7 @@ if __name__ == "__main__":
     cv2.namedWindow('image', cv2.WINDOW_NORMAL)
     cv2.moveWindow("image", 1500, 0)
 
-    show(np.zeros([451,599,4]),wait=200)
+    show(np.zeros([451,599,4], dtype='uint8'),wait=200)
 
     result = locate_game()
 
