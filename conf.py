@@ -17,9 +17,9 @@ ammo = [13,32,0]
 
 # Colors for identifying the current state
 state_colors = {
-    (106, 152, 141, 255) : 'battle',
-    (27, 38, 35, 255) : 'loadout' ,
-    (19, 8, 202, 255) : 'retry'   ,
-    (39, 111, 139, 255) : 'start'   ,
-    (225, 235, 232, 255) : 'wait'    ,
+    (106, 152, 141) : 'battle',
+    (27, 38, 35) : 'loadout' ,
+    (19, 8, 202) : 'retry'   ,
+    (39, 111, 139) : 'start'   ,
+    (225, 235, 232) : 'wait'    ,
     }

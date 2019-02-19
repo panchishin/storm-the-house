@@ -64,9 +64,9 @@ def get_pic():
     global mon
     pic = np.array(sct.grab(mon) ,dtype=np.uint8)
     if mon['width'] != pic.shape[1] :
-        return pic[::2,::2,:]
+        return pic[::2,::2,:3]
     else :
-        return pic
+        return pic[:,:,:3]
 
 window_initialized = False
 
