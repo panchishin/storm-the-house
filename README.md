@@ -22,3 +22,13 @@ The script starts off slow and easy, making sure to not over spend ammo.  As the
 
 <img src="./pics/day12.png" alt="Day 12" width="300"/>
 Loadout Screen
+
+
+## Windows
+
+on Windows `pyHook` needs a binary wheel: https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyhook
+
+You may be able to install it using
+```
+pip install https://download.lfd.uci.edu/pythonlibs/u2hcgva4/pyHook-1.5.1-cp36-cp36m-win_amd64.whl
+```

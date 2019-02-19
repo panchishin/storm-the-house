@@ -21,7 +21,13 @@ ammo_buy = 0 # initial amount of additional ammo to buy
 
 short_sleep = 0.25 # a small amount of time to wait between screen transations and such
 
-mon = locate.locate_game()
+try :
+    mon = locate.locate_game()
+except :
+    print("""Nope!  Doesn't look like you have the window open.
+Open a browser, go to http://www.crazygames.com/game/storm-the-house
+then get to the start screen of the game.""")
+    exit()
 
 buttons = {'play':[468,314],'retry':[299,279],'loadout_done':[303,413]}
 

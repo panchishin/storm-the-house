@@ -49,9 +49,7 @@ def locate_game():
             return locate_game_on_monitor(monitor)
         except :
             pass
-    raise """Cannot find the game window in any monitor.
-Open a browser, go to http://www.crazygames.com/game/storm-the-house
-then get to the start screen of the game."""
+    raise """Cannot find the game window in any monitor."""
 
 
 if __name__ == "__main__":
