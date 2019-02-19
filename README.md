@@ -1,10 +1,13 @@
 # Storm The House AutoClicker
 
-Inspired by Code Bullet's https://twitter.com/code_bullet video https://www.youtube.com/watch?v=fURH8z3hb6Y
+Inspired by [Code Bullets](https://twitter.com/code_bullet) fun autoclicker [video](https://www.youtube.com/watch?v=fURH8z3hb6Y)
+
+## Day 12
+<img src="./pics/day12.png" alt="Day 12" width="300"/>
 
 ## Instructions
 
-Open a browser and go to http://www.crazygames.com/game/storm-the-house. Get to the start screen.
+Open a browser and go to [the game](http://www.crazygames.com/game/storm-the-house). Get to the start screen.
 
 The python3 script `storm_the_house.py` automatically tries to find the game window.
 
