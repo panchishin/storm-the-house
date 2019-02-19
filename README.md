@@ -10,8 +10,9 @@ Open a browser and go to [the game](http://www.crazygames.com/game/storm-the-hou
 
 The python3 script `storm_the_house.py` automatically tries to find the game window.
 
-Execute the script
+Install the requirements and execute the script
 ```
+pip install -r requirements.txt
 python storm_the_house.py
 ```
 
