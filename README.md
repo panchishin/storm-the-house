@@ -24,10 +24,12 @@ The script starts off slow and easy, making sure to not over spend ammo.  As the
 
 
 Loadout screen
+
 <img src="./pics/day12.png" alt="Day 12" width="300"/>
 
 
 Bullets for days and stacks of cash
+
 <img src="./pics/day74.png" alt="Day 12" width="300"/>
 
 
