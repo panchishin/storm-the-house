@@ -8,8 +8,10 @@ import mss
 import cv2
 import pykeyboard
 import locate
+from conf import show_computer_vision, buttons, upgrades, ammo, state_colors
 
 ########## GLOBALS ##########
+
 
 pyautogui.PAUSE = 0.0 # make mouse clicks instant
 keypress = pykeyboard.PyKeyboard() # the keyboard tool
@@ -28,21 +30,6 @@ except :
 Open a browser, go to http://www.crazygames.com/game/storm-the-house
 then get to the start screen of the game.""")
     exit()
-
-buttons = {'play':[468,314],'retry':[299,279],'loadout_done':[303,413]}
-
-upgrades = [[63,115], [148,114], [235,115], [322,116], [408,112], [57,285], [132,286], [210,289]]
-
-ammo = [13,32,0]
-
-state_colors = {
-    (106, 152, 141, 255) : 'battle',
-    #(106, 152, 141, 255) : 'battle'  ,
-    (27, 38, 35, 255) : 'loadout' ,
-    (19, 8, 202, 255) : 'retry'   ,
-    (39, 111, 139, 255) : 'start'   ,
-    (225, 235, 232, 255) : 'wait'    ,
-    }
 
 previous_state = "initialized"
 
@@ -72,9 +59,6 @@ def detect_state(pic):
 ########## SET UP CV2 WINDOW ##########
 
 
-cv2.namedWindow('image', cv2.WINDOW_NORMAL)
-cv2.moveWindow("image", 1000, 0)
-
 
 def get_pic():
     global mon
@@ -84,7 +68,16 @@ def get_pic():
     else :
         return pic
 
+window_initialized = False
+
 def show_pic(pic,wait=1):
+    global window_initialized
+    if not show_computer_vision:
+        return
+    if not window_initialized:
+        cv2.namedWindow('image', cv2.WINDOW_NORMAL)
+        cv2.moveWindow("image", 1000, 0)
+        window_initialized = True
     cv2.imshow('image', pic)
     _ = cv2.waitKey(wait)
 
@@ -148,12 +141,12 @@ if __name__ == "__main__" :
             for _ in range(min(20,max(0,int(ammo_buy/10)-5))) :
                 for upgrade in upgrades:
                     click(*upgrade)
-                    time.sleep(0.02)
+                    time.sleep(0.1)
             for _ in range(int(ammo_buy)) :
                 click(*upgrades[0]) # bullets
-                time.sleep(0.02)
+                time.sleep(0.1)
                 click(*upgrades[1]) # health
-                time.sleep(0.02)
+                time.sleep(0.1)
             time.sleep(5)
             click(*buttons['loadout_done'])
             time.sleep(short_sleep)
