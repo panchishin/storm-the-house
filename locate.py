@@ -8,8 +8,9 @@ def show(img,wait=100) :
     cv2.imshow('image', img)
     _ = cv2.waitKey(wait)
 
-def locate_game_on_monitor(monitor_number=1,color_val=[63,60,59]):
-    mon = sct.monitors[monitor_number]
+
+def locate_game_using_color(color_val=(72,68,67)):
+    mon = sct.monitors[1]
     pic = np.array(sct.grab(mon),dtype=np.uint8)
     scale = int(round(pic.shape[1] / mon['width']))
     if scale > 1 :
@@ -31,11 +32,9 @@ def locate_game_on_monitor(monitor_number=1,color_val=[63,60,59]):
     thickness = bottom - top
     height = 940-445
     top = bottom - height
-    bottom -= thickness
 
-    result = {"top": top + mon['top'], "left": left + mon['left'], "width": right-left, "height": bottom-top}
+    return {"top": top + mon['top'], "left": left + mon['left'], 'width': 599, 'height': 451}
 
-    return result
 
 def locate_game():
     """
@@ -43,20 +42,17 @@ def locate_game():
 
     Returns : monitor location : {top,left,width,height}
     """
-    for monitor in range(1,5):
-        for color_val in ((63,60,59),(72,68,67)):
-            try :
-                return locate_game_on_monitor(monitor,color_val)
-            except :
-                pass
-    raise Exception("Cannot find the game window in any monitor.")
+    try :
+        return locate_game_using_color()
+    except :
+        raise Exception("Cannot find the game on the primary monitor.")
 
 
 if __name__ == "__main__":
     cv2.namedWindow('image', cv2.WINDOW_NORMAL)
     cv2.moveWindow("image", 1500, 0)
 
-    show(np.zeros([451,599,4], dtype='uint8'),wait=200)
+    show(np.zeros((451,599,3), dtype='uint8'),wait=200)
 
     result = locate_game()
 

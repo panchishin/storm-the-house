@@ -81,7 +81,7 @@ def show_pic(pic,wait=1):
     cv2.imshow('image', pic)
     _ = cv2.waitKey(wait)
 
-show_pic(np.zeros([451,599,4]),wait=200)
+show_pic(np.zeros([451,599,3]),wait=200)
 
 bubble = []
 
