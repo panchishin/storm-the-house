@@ -10,10 +10,13 @@ buttons = {
     }
 
 # Relative location of each of the upgrades
-upgrades = [[63,115], [148,114], [235,115], [322,116], [408,112], [57,285], [132,286], [210,289]]
+ammo_upgrade = [63,115]
+health_upgrade = [148,114]
+basic_upgrades = [ammo_upgrade, health_upgrade, [235,115], [322,116], [408,112]]
+all_upgrades = basic_upgrades + [[57,285], [132,286], [210,289]]
 
 # The ammo bar
-ammo = [13,32,0]
+ammo_bar = [13,32,0]
 
 # Colors for identifying the current state
 state_colors = {

@@ -20,7 +20,9 @@ python storm_the_house.py
 
 The script starts off slow and easy, making sure to not over spend ammo.  As the levels progress it will start clicking more frequently.
 
-## Screen Shot
+It doesn't stop and it has control of the mouse.  It does pause for 5 seconds after purchasing upgrades.  During that time you can switch windows and ctrl+c your python script.  Another trick you can do is somehow switch view, like the triple drag on a mac.  This will active the state change logic, and if the program cannot figure out the state change then it bails.
+
+## Screen Shots
 
 
 Loadout screen

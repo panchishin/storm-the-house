@@ -8,7 +8,7 @@ import mss
 import cv2
 import pykeyboard
 import locate
-from conf import show_computer_vision, buttons, upgrades, ammo, state_colors
+from conf import show_computer_vision, buttons, ammo_upgrade, health_upgrade, basic_upgrades, ammo_bar, state_colors
 
 ########## GLOBALS ##########
 
@@ -23,6 +23,8 @@ ammo_buy = 0 # initial amount of additional ammo to buy
 
 short_sleep = 0.25 # a small amount of time to wait between screen transations and such
 
+upgrade_time = 0.075 # wait time to make sure upgrade clicks get registered
+
 try :
     mon = locate.locate_game()
 except :
@@ -32,32 +34,35 @@ then get to the start screen of the game.""")
     exit()
 
 previous_state = "initialized"
+day = 0
+
+
+def enter_battle() :
+    global sleepy_time, ammo_buy, ammo_bar, bubble_radius, day
+    day += 1
+    ammo_bar[2] = pic[ammo_bar[1],ammo_bar[0],0]
+    bubble_radius = max(10,bubble_radius - 2)
+    sleepy_time = max(0,sleepy_time * 0.90 - .01)
+    ammo_buy = min(500,int(ammo_buy*1.1+5))
+    print("Day",day,", next purchase",ammo_buy,"ammo")
+
 
 def detect_state(pic):
-    global previous_state, state_colors, sleepy_time, ammo_buy, ammo, bubble_radius
+    global previous_state, state_colors
     colors = tuple(pic[-15,-15])
     color = colors[0]
     if colors in state_colors :
         if state_colors[colors] != previous_state :
-            print("detect_state colors",colors)
             previous_state = state_colors[colors]
-            print("Found new state :",previous_state)
+            print("Detected state :",previous_state)
             if previous_state == "battle" :
-                ammo[2] = pic[ammo[1],ammo[0],0]
-                bubble_radius = max(35,bubble_radius - 5)
-                sleepy_time = max(0,sleepy_time * 0.90 - .01)
-                ammo_buy = min(200,ammo_buy+5)
-                print("Sleepy time",int(1000*sleepy_time),"ms, ammo buy",ammo_buy)
+                enter_battle()
             time.sleep(0.1) 
     elif previous_state != "unknown" :
         print("detect_state colors",colors)
         print("Could not find",color,"in states")
         previous_state = "unknown"
     return previous_state
-
-
-########## SET UP CV2 WINDOW ##########
-
 
 
 def get_pic():
@@ -105,7 +110,7 @@ def shoot(pic) :
         if pic[y][x][0] == 0 and pic[y][x][1] == 0 and pic[y][x][2] == 0:
             if not in_bubble(x,y):
                 click(x,y)
-                click(x,y)
+                click(x,y) # double tap for the win
                 bubble.append((x,y))
 
 
@@ -119,34 +124,39 @@ if __name__ == "__main__" :
 
         if state == "start" :
             click(*buttons['play'])
-            click(*buttons['play'])
+            click(*buttons['play']) # double tap for the win
             time.sleep(short_sleep)
 
         elif state == "battle" :
             shoot(pic)
-            if pic[ammo[1],ammo[0],0] != ammo[2]:
+            if pic[ammo_bar[1],ammo_bar[0],0] != ammo_bar[2]:
                 keypress.press_key(' ')
                 time.sleep(.1)
                 keypress.release_key(' ')
                 time.sleep(.8)
-                bubble = []
             if sleepy_time >= 0.001 :
-                bubble = bubble[-6:][1:]
                 time.sleep(sleepy_time)
-            else :
-                bubble = []
+            bubble = []
 
         elif state == "loadout" :
             time.sleep(short_sleep)
-            for _ in range(min(20,max(0,int(ammo_buy/10)-5))) :
-                for upgrade in upgrades:
-                    click(*upgrade)
-                    time.sleep(0.1)
+
+            # health upgrade are the most important
+            for _ in range(min(int(ammo_buy/2),50)) :
+                click(*health_upgrade)
+                time.sleep(upgrade_time)
+
+            # try all basic upgrades once
+            for upgrade in basic_upgrades :
+                click(*upgrade)
+                time.sleep(upgrade_time)
+
+            # ammo upgrade 
             for _ in range(int(ammo_buy)) :
-                click(*upgrades[0]) # bullets
-                time.sleep(0.1)
-                click(*upgrades[1]) # health
-                time.sleep(0.1)
+                click(*ammo_upgrade)
+                time.sleep(upgrade_time)
+
+            # allow the user to quit!
             time.sleep(5)
             click(*buttons['loadout_done'])
             time.sleep(short_sleep)
@@ -156,7 +166,7 @@ if __name__ == "__main__" :
 
         elif state == "retry":
             click(*buttons['retry'])
-            click(*buttons['retry'])
+            click(*buttons['retry']) # double tap for the win
             time.sleep(short_sleep)
 
      
