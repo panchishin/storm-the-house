@@ -32,7 +32,12 @@ Loadout screen
 
 Bullets for days and stacks of cash
 
-<img src="./pics/day74.png" alt="Day 12" width="300"/>
+<img src="./pics/day74.png" alt="Day 74" width="300"/>
+
+
+Day 42 and going strong
+
+<img src="./pics/day42.gif" alt="Day 42" width="300"/>
 
 
 ## Windows
