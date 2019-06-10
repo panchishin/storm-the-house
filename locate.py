@@ -9,10 +9,11 @@ def show(img,wait=100) :
     _ = cv2.waitKey(wait)
 
 
-def locate_game_using_color(color_val=(72,68,67)):
-    mon = sct.monitors[1]
+def locate_game_using_color(monitor=1,color_val=(62,152,203)):  # this is the orange color of intro screen.
+    mon = sct.monitors[monitor]
     pic = np.array(sct.grab(mon),dtype=np.uint8)
     scale = int(round(pic.shape[1] / mon['width']))
+    print(f"The scale is {scale}")
     if scale > 1 :
         pic = pic[::scale,::scale,:3]
     else :
@@ -24,16 +25,7 @@ def locate_game_using_color(color_val=(72,68,67)):
     e = a * b * c
 
     locs = np.where( e == True )
-    top = locs[0][0]
-    bottom = locs[0][-1]
-    left = locs[1][0]
-    right = locs[1][-1]
-
-    thickness = bottom - top
-    height = 940-445
-    top = bottom - height
-
-    return {"top": top + mon['top'], "left": left + mon['left'], 'width': 599, 'height': 451}
+    return {'top':locs[0].min(),'left':locs[1].min(),'height':451,'width':599}
 
 
 def locate_game():
@@ -43,21 +35,26 @@ def locate_game():
     Returns : monitor location : {top,left,width,height}
     """
     try :
-        return locate_game_using_color()
+        for monitor in range(len(sct.monitors)) :
+            if sct.monitors[monitor]['top'] == 0 :
+                return locate_game_using_color(monitor=monitor)
+            else :
+                print(f"Can't use monitor {monitor}, not primary")
     except :
-        raise Exception("Cannot find the game on the primary monitor.")
+        raise Exception("Cannot find the game on the primary monitor.  Try moving the game window to another monitor.")
 
 
 if __name__ == "__main__":
     cv2.namedWindow('image', cv2.WINDOW_NORMAL)
-    cv2.moveWindow("image", 1500, 0)
+    cv2.moveWindow("image", 1000, 0)
 
     show(np.zeros((451,599,3), dtype='uint8'),wait=200)
 
     result = locate_game()
 
     pic = np.array(sct.grab(result),dtype=np.uint8)
-    show(pic)
+    print("the color at the top left is ",pic[0,0])
+    show(pic,wait=2000)
     print(result)
 
     _ = cv2.waitKey(5000)

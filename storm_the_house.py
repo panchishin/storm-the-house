@@ -30,7 +30,8 @@ try :
 except :
     print("""Nope!  Doesn't look like you have the window open.
 Open a browser, go to http://www.crazygames.com/game/storm-the-house
-then get to the start screen of the game.""")
+then get to the start screen of the game.
+You'll want the game on your primary monitor.""")
     exit()
 
 previous_state = "initialized"
